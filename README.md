@@ -73,12 +73,19 @@ make all install -j16
 * Copy libc headers
     * Copy [libc32b](http://retropc.net/x68000/software/develop/lib/libc1132a/) into $(HOME)/Emu/x68000/cross/libc32b
 
-## Build and run Hello
+## Build and run samples
+
+### hello
 
 * cd hello
 * make install
 * ~/tmp/hello.x is built
 * run [XM6 TypeG](http://retropc.net/pi/xm6/index.html) via wine on Mac, configure WinDRV to share Mac's drive with the emulator
 * mount ~/tmp in X68000 emulator as D: drive with WinDRV and run d:\hello.x
-* ![hello.x](./docs/hello.png)
+![hello.x](./docs/hello.png)
 
+
+### vram
+
+* vram access example
+![vram.x](./docs/vram.png)
