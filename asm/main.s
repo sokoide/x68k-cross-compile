@@ -39,10 +39,6 @@ newline:
 	addq.l	#2, %sp
 	rts
 
-# TODO: for some reason, the messages are in .rodata section,
-# it fails to load
-# keep them in .text section for now
-
 	 .section .rodata
 .message1:
 	.string "ABCType 3 characters.\r\n"
