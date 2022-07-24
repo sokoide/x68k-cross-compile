@@ -1,6 +1,7 @@
-TARGET=vram.X
-SRCS=vram.c
-HEADERS=$(SRCS:.c=.h)
+TARGET=	vram.X
+SRCS=	main.c \
+		vram.c
+HEADERS=$(wildcard *.h)
 OBJS=$(SRCS:.c=.o)
 HUMAN68K_TC=$(HOME)/Emu/x68000/cross/human68k
 CC=$(HUMAN68K_TC)/bin/human68k-gcc
@@ -17,8 +18,8 @@ $(TARGET): $(OBJS)
 	$(CC) $^ -o tmp.elf $(LIB)
 	$(OBJCOPY) -O xfile tmp.elf $@
 
-$(OBJS): $(SRCS) $(HEADERS)
-	$(HOGE)/$(CC) $(CCFLAGS) -c $< -o $@ $(CCFLAGS)
+%.o: %.c
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(TARGET) *.elf *.o
