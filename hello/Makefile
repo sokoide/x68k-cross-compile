@@ -4,12 +4,13 @@ OBJS=$(SRCS:.c=.o)
 HUMAN68K_TC=$(HOME)/Emu/x68000/cross/human68k
 CC=$(HUMAN68K_TC)/bin/human68k-gcc
 OBJCOPY=$(HUMAN68K_TC)/bin/human68k-objcopy
+OBJDUMP=$(HUMAN68K_TC)/bin/human68k-objdump
 LIB=-L$(HOME)/Emu/x68000/cross/human68k/human68k/lib
 INCLUDE=-I$(HOME)/Emu/x68000/cross/human68k/human68k/include -I$(HOME)/Emu/x68000/cross/libc32b/include
-CCFLAGS=$(INCLUDE) -g -O2 -lc -lm
+CCFLAGS=$(INCLUDE) -g -O2
 
 .PHONY:
-	clean
+	clean install dump
 
 $(TARGET): $(OBJS)
 	$(CC) $^ -o tmp.elf $(LIB)
@@ -23,3 +24,6 @@ clean:
 
 install: $(TARGET)
 	cp $(TARGET) $(HOME)/tmp
+
+dump: $(TARGET)
+	$(OBJDUMP) -D $(TARGET)
