@@ -8,10 +8,10 @@
 	.globl	main
 	.type	main, @function
 main:
-	pea		.message1
+	pea.l	.message1
 	dc.w	_print
 	addq.l 	#4,%sp
-	pea		.message2
+	pea.l	.message2
 	dc.w	_print
 	addq.l 	#4,%sp
 
@@ -43,8 +43,7 @@ newline:
 # it fails to load
 # keep them in .text section for now
 
-#	.section .rodata
-
+	 .section .rodata
 .message1:
 	.string "ABCType 3 characters.\r\n"
 .message2:
