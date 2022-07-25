@@ -15,7 +15,7 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-export HUMAN68K_TC=$HOME/Emu/x68000/cross/human68k
+export HUMAN68K_TC=$HOME/repo/x68000/cross/human68k
 export HUMAN68K_TC_SRC=$HUMAN68K_TC/src
 export PATH=$PATH:$HUMAN68K_TC/bin
 
@@ -74,6 +74,10 @@ make all install -j16
     * Copy [libc32b](http://retropc.net/x68000/software/develop/lib/libc1132a/) into $(HOME)/Emu/x68000/cross/libc32b
 
 ## Build and run samples
+
+### common
+
+* set `HUMAN68K_TC=$(HOME)/repo/x68000/cross/human68k` or etc
 
 ### hello
 

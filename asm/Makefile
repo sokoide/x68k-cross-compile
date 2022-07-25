@@ -1,7 +1,6 @@
 TARGET=ASM.X
 SRCS=main.s
 OBJS=$(SRCS:.s=.o)
-HUMAN68K_TC=$(HOME)/Emu/x68000/cross/human68k
 CC=$(HUMAN68K_TC)/bin/human68k-gcc
 AS=$(HUMAN68K_TC)/bin/human68k-as
 LD=$(HUMAN68K_TC)/bin/human68k-ld
@@ -17,7 +16,6 @@ LDFLAGS=$(LIB) -ldos -liocs -nostdlib
 
 $(TARGET): $(OBJS)
 	$(LD) $< -o tmp.elf $(LDFLAGS) -e main -q
-	#$(CC)  -v $< -o tmp.elf $(LDFLAGS) -e main
 	$(OBJCOPY) -O xfile tmp.elf $@
 
 %.o: %.s
