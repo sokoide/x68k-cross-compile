@@ -17,10 +17,10 @@ $(TARGET): $(OBJS)
 	$(OBJCOPY) -O xfile tmp.elf $@
 
 $(OBJS): $(SRCS)
-	$(CC) -c $< -o $@ $(CCFLAGS)
+	$(CC) -Wa,-adhlns="$@.lst" -c $< -o $@ $(CCFLAGS)
 
 clean:
-	rm -rf $(TARGET) *.elf *.o
+	rm -rf $(TARGET) *.elf *.o *.lst
 
 install: $(TARGET)
 	cp $(TARGET) $(HOME)/tmp

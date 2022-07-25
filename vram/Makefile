@@ -21,10 +21,10 @@ $(TARGET): $(OBJS)
 	$(OBJCOPY) -O xfile tmp.elf $@
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) -Wa,-adhlns="$@.lst" -c $< -o $@ $(CCFLAGS)
 
 clean:
-	rm -rf $(TARGET) *.elf *.o
+	rm -rf $(TARGET) *.elf *.o *.lst
 
 install: $(TARGET)
 	cp $(TARGET) $(HOME)/tmp
