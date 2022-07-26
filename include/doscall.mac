@@ -1,0 +1,147 @@
+* DOSCALL
+
+	.nolist
+
+.equ _EXIT, 0xff00
+.equ _GETCHAR, 0xff01
+.equ _PUTCHAR, 0xff02
+.equ _COMINP, 0xff03
+.equ _COMOUT, 0xff04
+.equ _PRNOUT, 0xff05
+.equ _INPOUT, 0xff06
+.equ _INKEY, 0xff07
+.equ _GETC, 0xff08
+.equ _PRINT, 0xff09
+.equ _GETS, 0xff0a
+.equ _KEYSNS, 0xff0b
+.equ _KFLUSH, 0xff0c
+.equ _FFLUSH, 0xff0d
+.equ _CHGDRV, 0xff0e
+.equ _CHDRV, 0xff0e
+.equ _DRVCTRL, 0xff0f
+.equ _CONSNS, 0xff10
+.equ _PRNSNS, 0xff11
+.equ _CINSNS, 0xff12
+.equ _COUTSNS, 0xff13
+.equ _FATCHK, 0xff17
+.equ _HENDSP, 0xff18
+.equ _CURDRV, 0xff19
+.equ _GETSS, 0xff1a
+.equ _FGETC, 0xff1b
+.equ _FGETS, 0xff1c
+.equ _FPUTC, 0xff1d
+.equ _FPUTS, 0xff1e
+.equ _ALLCLOSE, 0xff1f
+.equ _SUPER, 0xff20
+.equ _FNCKEY, 0xff21
+.equ _KNJCTRL, 0xff22
+.equ _CONCTRL, 0xff23
+.equ _KEYCTRL, 0xff24
+.equ _INTVCS, 0xff25
+.equ _PSPSET, 0xff26
+.equ _GETTIM2, 0xff27
+.equ _SETTIM2, 0xff28
+.equ _NAMESTS, 0xff29
+.equ _GETDATE, 0xff2a
+.equ _SETDATE, 0xff2b
+.equ _GETTIME, 0xff2c
+.equ _SETTIME, 0xff2d
+.equ _VERIFY, 0xff2e
+.equ _DUP0, 0xff2f
+.equ _VERNUM, 0xff30
+.equ _KEEPPR, 0xff31
+.equ _GETDPB, 0xff32
+.equ _BREAKCK, 0xff33
+.equ _DRVXCHG, 0xff34
+.equ _INTVCG, 0xff35
+.equ _DSKFRE, 0xff36
+.equ _NAMECK, 0xff37
+.equ _MKDIR, 0xff39
+.equ _RMDIR, 0xff3a
+.equ _CHDIR, 0xff3b
+.equ _CREATE, 0xff3c
+.equ _OPEN, 0xff3d
+.equ _CLOSE, 0xff3e
+.equ _READ, 0xff3f
+.equ _WRITE, 0xff40
+.equ _DELETE, 0xff41
+.equ _SEEK, 0xff42
+.equ _CHMOD, 0xff43
+.equ _IOCTRL, 0xff44
+.equ _DUP, 0xff45
+.equ _DUP2, 0xff46
+.equ _CURDIR, 0xff47
+.equ _MALLOC, 0xff48
+.equ _MFREE, 0xff49
+.equ _SETBLOCK, 0xff4a
+.equ _EXEC, 0xff4b
+.equ _EXIT2, 0xff4c
+.equ _WAIT, 0xff4d
+.equ _FILES, 0xff4e
+.equ _NFILES, 0xff4f
+
+.ifdef __HUMAN_V2__
+
+.equ _SETPDB, 0xff50
+.equ _GETPDB, 0xff51
+.equ _SETENV, 0xff52
+.equ _GETENV, 0xff53
+.equ _VERIFYG, 0xff54
+.equ _COMMON, 0xff55
+.equ _RENAME, 0xff56
+.equ _FILEDATE, 0xff57
+.equ _MALLOC2, 0xff58
+.equ _MAKETMP, 0xff5a
+.equ _NEWFILE, 0xff5b
+.equ _LOCK, 0xff5c
+.equ _ASSIGN, 0xff5f
+.equ _GETFCB, 0xff7c
+.equ _S_MALLOC, 0xff7d
+.equ _S_MFREE, 0xff7e
+.equ _S_PROCESS, 0xff7f
+
+.else
+
+.equ _SETPDB, 0xff80
+.equ _GETPDB, 0xff81
+.equ _SETENV, 0xff82
+.equ _GETENV, 0xff83
+.equ _VERIFYG, 0xff84
+.equ _COMMON, 0xff85
+.equ _RENAME, 0xff86
+.equ _FILEDATE, 0xff87
+.equ _MALLOC2, 0xff88
+.equ _MAKETMP, 0xff8a
+.equ _NEWFILE, 0xff8b
+.equ _LOCK, 0xff8c
+.equ _ASSIGN, 0xff8f
+.equ _GETFCB, 0xffac
+.equ _S_MALLOC, 0xffad
+.equ _S_MFREE, 0xffae
+.equ _S_PROCESS, 0xffaf
+
+.endif
+
+.equ _RETSHELL, 0xfff0
+.equ _CTLABORT, 0xfff1
+.equ _ERRABORT, 0xfff2
+.equ _DISKRED, 0xfff3
+.equ _DISKWRT, 0xfff4
+.equ _INDOSFLG, 0xfff5
+.equ _SUPER_JSR, 0xfff6
+.equ _MEMCPY, 0xfff7
+.equ _OPEN_PR, 0xfff8
+.equ _KILL_PR, 0xfff9
+.equ _GET_PR, 0xfffa
+.equ _SUSPEND_PR, 0xfffb
+.equ _SLEEP_PR, 0xfffc
+.equ _SEND_PR, 0xfffd
+.equ _TIME_PR, 0xfffe
+.equ _CHANGE_PR, 0xffff
+
+
+.macro DOS callname
+	dc.w \callname
+.endm
+
+	.list

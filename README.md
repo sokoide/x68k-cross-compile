@@ -20,9 +20,18 @@ export HUMAN68K_TC_SRC=$HUMAN68K_TC/src
 export PATH=$PATH:$HUMAN68K_TC/bin
 
 if [ -d $HUMAN68K_TC_SRC ]; then
-mkdir $HUMAN68K_TC $HUMAN68K_TC_SRC
+mkdir -p $HUMAN68K_TC_SRC
 fi
 
+# downgrade texinfo if 5.x or newer is installed
+wget http://ftp.gnu.org/gnu/texinfo/texinfo-4.13.tar.gz
+tar -zxf texinfo-4.13.tar.gz
+cd texinfo-4.13
+./configure
+make
+sudo make install
+
+# binutils
 cd $HUMAN68K_TC_SRC
 git clone git@github.com:Lydux/binutils-2.22-human68k.git
 mkdir binutils-build
@@ -94,6 +103,11 @@ make all install -j16
 * vram access example
 ![vram.x](./docs/vram.png)
 
-### asm
+### asm-hello
 
 * assmebler + DOS call example
+
+### asm-memory
+
+* print memory blocks
+![vram.x](./docs/asmmem.png)
