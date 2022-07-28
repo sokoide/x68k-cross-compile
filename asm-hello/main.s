@@ -41,7 +41,7 @@ newline:
 
 	 .section .data
 .message1:
-	.string "ABCType 3 characters.\r\n"
+	.string "Type 3 characters.\r\n"
 .message2:
 	.string "They'll be converted to upper-case\r\n"
 
