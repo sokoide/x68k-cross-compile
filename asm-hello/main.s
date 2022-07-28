@@ -39,7 +39,7 @@ newline:
 	addq.l	#2, %sp
 	rts
 
-	 .section .rodata
+	 .section .data
 .message1:
 	.string "ABCType 3 characters.\r\n"
 .message2:
