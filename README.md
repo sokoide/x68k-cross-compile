@@ -209,3 +209,17 @@ program terminated normally
 
 ```
 ![asmdbg.x](./docs/asmdbg.png)
+
+### asm-device
+
+* Print installed device drivers
+
+## Differences in GNU Assembler
+
+* _title_: _as_ -> _gas_
+* register: `d1` -> `%d1`
+* indirect: `(a0)` ->  `%a0@`
+* indirect pre-decrement: `-(sp)` ->  `%sp@-`
+* indirect post-increment: `(a0)+` ->  `%a0@+`
+* indirect plus offsete: `12(a0)` ->  `%a0@(12)`
+* Link: <https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_214.html>
