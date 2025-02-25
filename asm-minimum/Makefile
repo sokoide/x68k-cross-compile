@@ -1,4 +1,4 @@
-TARGET=ASMHELLO.X
+TARGET=ASMMIN.X
 SRCS=main.s
 OBJS=$(SRCS:.s=.o)
 
@@ -23,7 +23,7 @@ $(TARGET): $(OBJS)
 	elf2x68k.py -o $(TARGET) $(TARGET).elf
 
 %.o: %.s
-	$(AS) $^ -o $@ -m68000
+	$(AS) $^ -o $@ -m68000 -I../include
 
 clean:
 	rm -rf $(TARGET) *.elf *.o

@@ -1,22 +1,26 @@
 TARGET=ASMDBG.X
 SRCS=main.s
 OBJS=$(SRCS:.s=.o)
-CC=$(HUMAN68K_TC)/bin/human68k-gcc
-AS=$(HUMAN68K_TC)/bin/human68k-as
-LD=$(HUMAN68K_TC)/bin/human68k-ld
-OBJCOPY=$(HUMAN68K_TC)/bin/human68k-objcopy
-OBJDUMP=$(HUMAN68K_TC)/bin/human68k-objdump
-LIB=-L$(HUMAN68K_TC)/human68k/lib
-INCLUDE=-I$(HUMAN68K_TC)/human68k/include -I$(HUMAN68K_TC)/../libc32b/include
+
+CC=m68k-xelf-gcc
+AS=m68k-xelf-as
+LD=m68k-xelf-ld
+OBJCOPY=m68k-xelf-objcopy
+OBJDUMP=m68k-xelf-objdump
+READELF=m68k-xelf-readelf
+
+INCLUDE=-I$(XELF_BASE)/m68k-elf/include
+LIB=-L$(XELF_BASE)/m68k-elf/lib
+
 CCFLAGS=$(INCLUDE) -g -O2
-LDFLAGS=$(LIB) -ldos -liocs -nostdlib
+LDFLAGS=$(LIB) -lx68kdos -lx68kiocs -nostdlib
 
 .PHONY:
-	clean install dump
+	clean install dump readelf
 
 $(TARGET): $(OBJS)
-	$(LD) $< -o tmp.elf $(LDFLAGS) -e main -q
-	$(OBJCOPY) -O xfile tmp.elf $@
+	$(LD) $^ -o $(TARGET).elf $(LDFLAGS) -e main -q
+	elf2x68k.py -o $(TARGET) $(TARGET).elf
 
 %.o: %.s
 	$(AS) $^ -o $@ -m68000 -I../include
@@ -29,3 +33,6 @@ install: $(TARGET)
 
 dump: $(TARGET)
 	$(OBJDUMP) -D $(TARGET)
+
+readelf: $(TARGET)
+	$(READELF) -a $(TARGET).elf

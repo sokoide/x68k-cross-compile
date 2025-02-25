@@ -106,11 +106,11 @@ buff:
 crlf:
 	.dc.b	0x0d, 0x0a, 0x0
 
-	.section .stack
+	# .stack or other custom sections are not supported
+	.section .bss
 	.align	2
 mystack:
 	.ds.l	1024
 mysp:
 	.end 	main
-
 

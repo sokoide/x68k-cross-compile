@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #pragma warning disable format
-#include <iocslib.h>
+#include <x68k/iocs.h>
 #pragma warning restore format
 
 // globals
@@ -63,24 +63,24 @@ void fill_vram(unsigned short page) {
 }
 
 void init_palette() {
-    GPALET(0, 0);
+    _iocs_gpalet(0, 0);
 
     int i = 1;
     int j;
     for (j = 1; j < 64; j++) {
-        GPALET(i, rgb888_2grb(j * 4, j * 4, j * 4, 0));
+        _iocs_gpalet(i, rgb888_2grb(j * 4, j * 4, j * 4, 0));
         i++;
     }
     for (j = 0; j < 64; j++) {
-        GPALET(i, rgb888_2grb(j * 4, 0, 0, 0));
+        _iocs_gpalet(i, rgb888_2grb(j * 4, 0, 0, 0));
         i++;
     }
     for (j = 0; j < 64; j++) {
-        GPALET(i, rgb888_2grb(0, j * 4, 0, 0));
+        _iocs_gpalet(i, rgb888_2grb(0, j * 4, 0, 0));
         i++;
     }
     for (j = 0; j < 64; j++) {
-        GPALET(i, rgb888_2grb(0, 0, j * 4, 0));
+        _iocs_gpalet(i, rgb888_2grb(0, 0, j * 4, 0));
         i++;
     }
 }

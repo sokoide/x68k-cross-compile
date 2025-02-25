@@ -56,6 +56,7 @@ main:
 
 	bsr		chkarg
 	bsr		do
+
 	DOS		_SUPER
 	addq.l	#4, %sp
 	DOS		_EXIT
@@ -213,22 +214,25 @@ usgmes: .string	"Print installed device drivers.\r\nusage) asmdev\r\n"
 errmes: .string	"can't find NUL device\r\n"
 crlfms: .dc.b 	CR, LF, 0x0
 
+	.section .data
+	.align 2
+
 #
 # bss
+# .align is ignored in elf2x68k.py. must align it manually
 #
 	.section .bss
 	.align   2
 
 temp:
-	.ds.b 8+1
+	# must be 2 aligned
+ 	.ds.b 10
 
 #
 # stack
+# must be in .bss (not .stack)
 #
-	.section .stack
-	.align   2
-
 mystack:
 	.ds.l 1024
 mysp:
-	.end
+	.end main

@@ -45,4 +45,5 @@ newline:
 .message2:
 	.string "They'll be converted to upper-case\r\n"
 
+	.end 	main
 
