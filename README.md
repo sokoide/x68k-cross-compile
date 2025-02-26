@@ -161,16 +161,17 @@ program terminated normally
 
 ## Differences in GNU Assembler
 
-* _title_: _as_ -> _gas_
-* register: `d1` -> `%d1`
-* indirect: `(a0)` ->  `%a0@`
-* indirect pre-decrement: `-(sp)` ->  `%sp@-`
-* indirect post-increment: `(a0)+` ->  `%a0@+`
-* indirect plus offsete: `12(a0)` ->  `%a0@(12)`
-* Link: <https://ftp.gnu.org/old-gnu/Manuals/gas-2.9.1/html_node/as_214.html>
+| Item                   | Original `as` Syntax | GNU `gas` Syntax |
+|------------------------|-----------------|-----------------------|
+| register               | `d1`            | `%d1`                 |
+| indirect               | `(a0)`          | `%a0@`                |
+| indirect pre-decrement | `-(sp)`         | `%sp@-`               |
+| indirect post-increment| `(a0)+`         | `%a0@+`               |
+| indirect plus offset   | `12(a0)`        | `%a0@(12)`            |
+
+* Link: <https://sourceware.org/binutils/docs/as/index.html>
 
 ## Known items in elf2x68k.py
 
 * `.stack` or any custom sections are not supported -> use `.bss` for stack
 * `.align 2` is not supported -> manually align it
-
