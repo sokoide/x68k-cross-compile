@@ -17,7 +17,9 @@ volatile CRTC_REG* crtc = (CRTC_REG*)0xe80018;
 const unsigned short* vram0 = (unsigned short*)0xc00000;
 const unsigned short* vram1 = (unsigned short*)0xc80000;
 
-void clear_vram(unsigned short page) {
+__attribute__((optimize("no-unroll-loops")))
+void
+clear_vram(unsigned short page) {
     unsigned short* p = (unsigned short*)vram0;
     p = p + (0x80000 / 2 * page);
     unsigned short* limit = p + 0x80000 / 2;
@@ -65,23 +67,22 @@ void fill_vram(unsigned short page) {
 void init_palette() {
     _iocs_gpalet(0, 0);
 
-    int i = 1;
-    int j;
-    for (j = 1; j < 64; j++) {
-        _iocs_gpalet(i, rgb888_2grb(j * 4, j * 4, j * 4, 0));
-        i++;
-    }
-    for (j = 0; j < 64; j++) {
-        _iocs_gpalet(i, rgb888_2grb(j * 4, 0, 0, 0));
-        i++;
-    }
-    for (j = 0; j < 64; j++) {
-        _iocs_gpalet(i, rgb888_2grb(0, j * 4, 0, 0));
-        i++;
-    }
-    for (j = 0; j < 64; j++) {
-        _iocs_gpalet(i, rgb888_2grb(0, 0, j * 4, 0));
-        i++;
+    for (int i = 1; i < 256; i++) {
+        int j = i % 64;
+        switch (i / 64) {
+        case 0:
+            _iocs_gpalet(i, rgb888_2grb(j * 4, j * 4, j * 4, 0));
+            break;
+        case 1:
+            _iocs_gpalet(i, rgb888_2grb(j * 4, 0, 0, 0));
+            break;
+        case 2:
+            _iocs_gpalet(i, rgb888_2grb(0, j * 4, 0, 0));
+            break;
+        case 3:
+            _iocs_gpalet(i, rgb888_2grb(0, 0, j * 4, 0));
+            break;
+        }
     }
 }
 
