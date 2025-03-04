@@ -1,4 +1,4 @@
-TARGET=HELLO.X
+TARGET=hello.x
 SRCS=hello.c
 OBJS=$(SRCS:.c=.o)
 
@@ -8,7 +8,7 @@ OBJDUMP=m68k-xelf-objdump
 INCLUDE=-I$(XELF_BASE)/m68k-elf/include
 LIB=-L$(XELF_BASE)/m68k-elf/lib
 
-CCFLAGS=$(INCLUDE) -O2 -g
+CCFLAGS=$(INCLUDE) -O0 -g
 LDFLAGS=$(LIB) -lx68kdos -lx68kiocs
 
 .PHONY:

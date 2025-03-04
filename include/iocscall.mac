@@ -227,7 +227,11 @@
 .endm
 
 .macro IOCS number
-	moveq.l	#\number, %d0
+	.if ((\number) >= -128) && ((\number) <= 127)
+		moveq	#\number, %d0
+	.else
+		move.l	#\number, %d0
+	.endif
 	trap	#15
 .endm
 

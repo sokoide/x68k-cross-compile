@@ -1,6 +1,6 @@
 TOPTARGETS := all clean install
 
-SUBDIRS := $(wildcard asm-*/.) hello vram
+SUBDIRS := $(wildcard asm-*/.) hello vram noos
 
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
 
