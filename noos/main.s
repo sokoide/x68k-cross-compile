@@ -30,6 +30,7 @@ entry:
 loop:
 	bra	loop
 
+
 	.section .data
 
 .message1:
@@ -45,4 +46,4 @@ loop:
 mystack:
 	ds.b	256
 mysp:
-	.end main
+	.end entry
