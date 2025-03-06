@@ -50,6 +50,5 @@ $(EMPTYDISKIMG):
 	echo making $(DISKIMG)
 	dd if=/dev/zero of=$(EMPTYDISKIMG) bs=1024 count=1232
 
-
 readelf: $(TARGET)
 	$(READELF) -a $(TARGET).elf
