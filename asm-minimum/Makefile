@@ -14,6 +14,7 @@ LIB=-L$(XELF_BASE)/m68k-elf/lib
 
 CCFLAGS=$(INCLUDE) -g -O2
 LDFLAGS=$(LIB) -lx68kdos -lx68kiocs -nostdlib
+ASFLAGS=-m68000 --register-prefix-optional --traditional-format -I../include
 
 .PHONY:
 	clean install dump readelf
@@ -23,7 +24,7 @@ $(TARGET): $(OBJS)
 	elf2x68k.py -o $(TARGET) $(TARGET).elf
 
 %.o: %.s
-	$(AS) $^ -o $@ -m68000 -I../include
+	$(AS) $^ -o $@ $(ASFLAGS)
 
 clean:
 	rm -rf $(TARGET) *.elf *.o

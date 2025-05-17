@@ -4,39 +4,39 @@
 .equ _print, 0xff09
 
 	.text
-	.align	1
+	.even
 	.globl	main
 	.type	main, @function
 main:
 	pea.l	.message1
 	dc.w	_print
-	addq.l 	#4,%sp
+	addq.l 	#4,sp
 	pea.l	.message2
 	dc.w	_print
-	addq.l 	#4,%sp
+	addq.l 	#4,sp
 
-	mov.b	#3, %d1
+	mov.b	#3, d1
 l1:
 	#execute 0xff08 doscall
 	dc.w	_getc
-	and.b 	#0xdf, %d0
-	mov.w 	%d0, %sp@-
+	and.b 	#0xdf, d0
+	mov.w 	d0, -(sp)
 	#execute 0xff02 doscall
 	dc.w	_putchar
-	addq.l	#2, %sp
-	sub.b 	#1, %d1
-	cmp.b	#0, %d1
+	addq.l	#2, sp
+	sub.b 	#1, d1
+	cmp.b	#0, d1
 	bne.b	l1
 done:
 	bsr	 	newline
 	dc.w	_exit
 newline:
-	mov.w 	#0x0d, %sp@-
+	mov.w 	#0x0d, -(sp)
 	dc.w	_putchar
-	addq.l	#2, %sp
-	mov.w 	#0x0a, %sp@-
+	addq.l	#2, sp
+	mov.w 	#0x0a, -(sp)
 	dc.w	_putchar
-	addq.l	#2, %sp
+	addq.l	#2, sp
 	rts
 
 	 .section .data
@@ -46,4 +46,3 @@ newline:
 	.string "They'll be converted to upper-case\r\n"
 
 	.end 	main
-

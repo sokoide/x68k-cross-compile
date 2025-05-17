@@ -14,6 +14,9 @@ LIB=-L$(XELF_BASE)/m68k-elf/lib
 
 CCFLAGS=$(INCLUDE) -g -O2
 LDFLAGS=$(LIB) -lx68kdos -lx68kiocs -nostdlib
+# --register-prefix-optional allows us to write d0 instead of %d0
+# --traditional-format make it closer to Motorola syntax
+ASFLAGS=--register-prefix-optional --traditional-format -I../include
 
 .PHONY:
 	clean install dump readelf
@@ -23,7 +26,7 @@ $(TARGET): $(OBJS)
 	elf2x68k.py -o $(TARGET) $(TARGET).elf
 
 %.o: %.s
-	$(AS) $^ -o $@ -m68000 -I../include
+	$(AS) $^ -o $@ -m68000 $(ASFLAGS)
 
 clean:
 	rm -rf $(TARGET) *.elf *.o

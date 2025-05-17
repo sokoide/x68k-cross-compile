@@ -161,7 +161,9 @@ program terminated normally
 
 ## Differences in GNU Assembler
 
-| Item                   | Original `as` Syntax | GNU `gas` Syntax |
+* Add `--register-prefix-optional --traditional-format` to use Motolora syntax
+
+| Item                   | X68000/Motolora Syntax | GNU `gas` Syntax |
 |------------------------|-----------------|-----------------------|
 | register               | `d1`            | `%d1`                 |
 | indirect               | `(a0)`          | `%a0@`                |

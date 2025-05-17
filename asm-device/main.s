@@ -11,9 +11,9 @@
 
 #  macros
 .macro PUTC chr
-	move.w \chr, %sp@-
+	move.w \chr, -(sp)
 	DOS	_PUTCHAR
-	addq.l #2, %sp
+	addq.l #2, sp
 .endm
 
 .macro PUTSP
@@ -23,7 +23,7 @@
 .macro PUTS strptr
 	pea.l  \strptr
 	DOS	_PRINT
-	addq.l #4, %sp
+	addq.l #4, sp
 .endm
 
 .macro NEWLIN
@@ -31,7 +31,7 @@
 .endm
 
 .macro SELMES bit, str1, str2
-	btst.l #\bit, %d7
+	btst.l #\bit, d7
 	beq	0f
 	PUTS   \str1
 	bra	1f
@@ -44,40 +44,40 @@
 # entry
 #
 	.section .text
-	.align   2
+	.even
 	.globl   main
 	.type	main, @function
 
 main:
-	lea.l	mysp, %sp
-	clr.l	%sp@-
+	lea.l	mysp, sp
+	clr.l	-(sp)
 	DOS		_SUPER
-	move.l	%d0, %sp@
+	move.l	d0, -(sp)
 
 	bsr		chkarg
 	bsr		do
 
 	DOS		_SUPER
-	addq.l	#4, %sp
+	addq.l	#4, sp
 	DOS		_EXIT
 
 do:
 	bsr		seanul
-	tst.l	%d1
+	tst.l	d1
 	bmi		error
 	PUTS	title
 	PUTS	title2
 
 loop:
-	movea.l %d1, %a0
-	move.w  %a0@(DEVATR), %d7
+	move.l d1, a0
+	move.w  a0@(DEVATR), d7
 	bsr	 prtadr
 	bsr	 prtnam
 	bsr	 prtatr
 	SELMES  IOCTRL_BIT, okmes, notmes
 	NEWLIN
-	move.l  %a0@(DEVLNK), %d1
-	cmpi.l  #-1, %d1
+	move.l  a0@(DEVLNK), d1
+	cmpi.l  #-1, d1
 	bne	 loop
 	rts
 
@@ -85,77 +85,77 @@ loop:
 	.equ NULATR, 0x8024
 
 seanul:
-	lea.l  .nulnam, %a0
-	move.w %a0@+, %d0
-	move.l %a0@+, %d1
-	move.w %a0@+, %d2
-	lea.l  HUMANST, %a0
+	lea.l  .nulnam, a0
+	move.w a0@+, d0
+	move.l a0@+, d1
+	move.w a0@+, d2
+	lea.l  HUMANST, a0
 
 seanl0:
-	cmp.w %a0@+, %d0
+	cmp.w a0@+, d0
 	bne   seanl0
 
-	cmp.l %a0@, %d1
+	cmp.l a0@, d1
 	bne   seanl0
 
-	cmp.w %a0@(4), %d2
+	cmp.w a0@(4), d2
 	bne   seanl0
 
-	cmpa.l .nulnam+2, %a0
+	cmpa.l .nulnam+2, a0
 	beq	notfound
 
-	cmp.w #NULATR, %a0@(DEVATR-DEVNAM-2)
+	cmp.w #NULATR, a0@(DEVATR-DEVNAM-2)
 	bne   seanl0
 
-	lea.l %a0@(DEVLNK-DEVNAM-2), %a0
+	lea.l a0@(DEVLNK-DEVNAM-2), a0
 
-	move.l %a0, %d1
+	move.l a0, d1
 	rts
 
 notfound:
-	moveq.l #-1, %d1
+	moveq.l #-1, d1
 	rts
 
 prtadr:
 	pea.l	temp
-	move.l	%a0, %sp@-
+	move.l	a0, -(sp)
 	bsr		itoh
-	addq.l	#8, %sp
+	addq.l	#8, sp
 	PUTS 	temp+2
 	PUTSP
 	rts
 
 prtnam:
-	lea.l	%a0@(DEVNAM), %a1
-	moveq.l	#0, %d1
-	moveq.l	#8-1, %d2
+	lea.l	a0@(DEVNAM), a1
+	moveq.l	#0, d1
+	moveq.l	#8-1, d2
 prtnm0:
-	move.b	%a1@+, %d1
-	cmpi.b	#SPACE, %d1
+	move.b	a1@+, d1
+	cmpi.b	#SPACE, d1
 	bcc		prtnm1
-	moveq.l	#'.', %d1
+	moveq.l	#'.', d1
 prtnm1:
-	PUTC	%d1
-	dbra	%d2, prtnm0
+	PUTC	d1
+	dbra	d2, prtnm0
 	rts
 
 prtatr:
-	btst.l	#ISCHRDEV_BIT, %d7
+	btst.l	#ISCHRDEV_BIT, d7
 	beq		prtat2
 	PUTS	chrmes
 	SELMES	ISRAW_BIT, rawmes, cokmes
-	move.w	%d7, %d1
-	lea.l	atrdat, %a1
-	moveq.l	#0, %d2
-	moveq.l	#4-1, %d3
+	move.w	d7, d1
+	lea.l	atrdat, a1
+	moveq.l	#0, d2
+	moveq.l	#4-1, d3
 prtat0:
-	move.b	%a1@+, %d2
-	lsr.w	#1, %d1
+	move.b	a1@+, d2
+	lsr.w	#1, d1
 	bcs	prtat1
-	moveq.l	#'-', %d2
+	moveq.l	#'-', d2
 prtat1:
-	PUTC	%d2
-	dbra	%d3, prtat0
+	PUTC	d2
+	dbra	d3, prtat0
 	rts
 
 prtat2:
@@ -163,39 +163,39 @@ prtat2:
 	rts
 
 chkarg:
-	addq.l	#1, %a2
+	addq.l	#1, a2
 	bsr		skpsp
-	tst.b	%a2@
+	tst.b	a2@
 	bne		usage
 	rts
 
 skpsp0:
-	addq.l	#1, %a2
+	addq.l	#1, a2
 skpsp:
-	cmpi.b	#SPACE, %a2@
+	cmpi.b	#SPACE, a2@
 	beq		skpsp0
-	cmpi.b	#TAB, %a2@
+	cmpi.b	#TAB, a2@
 	beq		skpsp0
 	rts
 
 usage:
-	lea.l	usgmes, %a0
+	lea.l	usgmes, a0
 	bra		errout
 
 error:
-	lea.l	errmes, %a0
+	lea.l	errmes, a0
 errout:
-	move.w	#STDERR, %sp@-
-	move.l	%a0, %sp@-
+	move.w	#STDERR, -(sp)
+	move.l	a0, -(sp)
 	DOS		_FPUTS
-	addq.l	#6, %sp
-	move.w	#1, %sp@-
+	addq.l	#6, sp
+	move.w	#1, -(sp)
 	DOS		_EXIT2
 #
 # data
 #
 	.section .data
-	.align   2
+	.even
 /*               12345678 */
 .nulnam:	.string	"NUL     "
 /*               12345678901234567890 */
@@ -215,14 +215,14 @@ errmes: .string	"can't find NUL device\r\n"
 crlfms: .dc.b 	CR, LF, 0x0
 
 	.section .data
-	.align 2
+	.even
 
 #
 # bss
 # .align is ignored in elf2x68k.py. must align it manually
 #
 	.section .bss
-	.align   2
+	.even
 
 temp:
 	# must be 2 aligned

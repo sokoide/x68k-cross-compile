@@ -1,7 +1,7 @@
 	.include "doscall.mac"
 
 	.section .text
-	.align	1
+	.even
 	.globl	main
 	.type	main, @function
 
@@ -13,15 +13,14 @@ main:
 	DOS		_PRINT
 
 	# pop the pushed address
-	addq.l 	#4,%sp
+	addq.l 	#4,sp
 
 	# EXIT DOSCALL
 	DOS		_EXIT
 
 	.section .data
-	.align	2
+	.even
 .message1:
 	.string "Hello, world!\r\n"
 
 	.end 	main
-

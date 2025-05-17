@@ -141,7 +141,7 @@
 
 
 .macro DOS callname
-	.word	\callname
+	.dc.w	\callname
 .endm
 
 	.list

@@ -14,6 +14,7 @@ LIB=-L$(XELF_BASE)/m68k-elf/lib
 
 CCFLAGS=$(INCLUDE) -g -O2
 LDFLAGS=$(LIB) -lx68kiocs -nostdlib -Tlinker.ld
+ASFLAGS=-m68000 --register-prefix-optional --traditional-format -I../include
 
 DISKIMG=$(TARGET:.X=.xdf)
 EMPTYDISKIMG=empty.xdf
@@ -26,7 +27,7 @@ $(TARGET): $(OBJS) linker.ld
 	elf2x68k.py -s -o $(TARGET) $(TARGET).elf
 
 %.o: %.s
-	$(AS) --strip-local-absolute $^ -o $@ -m68000 -I../include
+	$(AS) --strip-local-absolute $^ -o $@ $(ASFLAGS)
 
 clean:
 	rm -rf $(TARGET) *.elf *.o *.bin $(DISKIMG)
