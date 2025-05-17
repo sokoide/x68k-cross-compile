@@ -14,7 +14,7 @@
 .equ	NEXTMEM,	12
 
 	.section .text
-	.align	2
+	.align	1
 	.globl	main
 	.type	main, @function
 main:

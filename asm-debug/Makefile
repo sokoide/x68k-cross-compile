@@ -32,7 +32,7 @@ install: $(TARGET)
 	cp $(TARGET) $(HOME)/tmp
 
 dump: $(TARGET)
-	$(OBJDUMP) -D $(TARGET)
+	$(OBJDUMP) -D $(TARGET).elf
 
 readelf: $(TARGET)
 	$(READELF) -a $(TARGET).elf

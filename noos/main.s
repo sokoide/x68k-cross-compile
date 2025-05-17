@@ -1,7 +1,7 @@
 	.include "iocscall.mac"
 
 	.section .text
-	.align	2
+	.align	1
 	.globl	boot
 	.type	boot, @function
 

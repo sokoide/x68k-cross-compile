@@ -1,7 +1,7 @@
 	.xdef itoh
 
 	.text
-	.align 2
+	.align 1
 
 #
 # itoh (buff, value)
